@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show tag
+        run: echo "Triggered by tag ${GITHUB_REF_NAME}"
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Debug OIDC Claims
+        uses: github/actions-oidc-debugger@2e9ba5d3f4bebaad1f91a2cede055115738b7ae8
+        with:
+          audience: '${{ github.server_url }}/${{ github.repository_owner }}'
